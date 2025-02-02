@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day Buttons</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://media.gettyimages.com/id/1368059545/vector/seamless-pattern-with-hearts.jpg?s=612x612&w=gi&k=20&c=IspJ6hPVHgJEZAOn_Hm4L0JJRt8ilb0HFm7G_zBfIhE=');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden; /* Prevents scrolling when the No button moves */
+      color: black; /* Set the default text color to black */
+    }
+    header {
+      font-size: 2em;
+      margin-top: 20px;
+      color: black; /* Ensure header text is black */
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 80vh;
+    }
+    button {
+      padding: 15px 25px;
+      font-size: 1.2em;
+      border: none;
+      cursor: pointer;
+      margin: 10px;
+      border-radius: 5px;
+      transition: transform 0.2s ease-in-out;
+    }
+    .yes {
+      background-color: green;
+      color: white;
+    }
+    .no {
+      background-color: red;
+      color: white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: top 0.2s ease, left 0.2s ease; /* Smooth movement for the No button */
+    }
+    .gif {
+      margin-top: 30px;
+      width: 300px; /* Set a consistent size for all gifs */
+      height: auto;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+    }
+    .confirmation {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .confirmation h1 {
+      font-size: 3em;
+      color: black; /* Ensure confirmation text is black */
+      margin-bottom: 20px;
+    }
+    .confirmation img {
+      width: 400px;
+      height: auto;
+    }
+
+    /* Responsive design for mobile screens */
+    @media (max-width: 768px) {
+      header {
+        font-size: 1.5em;
+      }
+      button {
+        font-size: 1em;
+        padding: 12px 20px;
+      }
+      .gif {
+        width: 250px;
+      }
+      .confirmation h1 {
+        font-size: 2em;
+      }
+      .confirmation img {
+        width: 80%; /* Make gif smaller on mobile */
+      }
+      .button-container {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        font-size: 1.2em;
+      }
+      button {
+        font-size: 0.9em;
+        padding: 10px 18px;
+      }
+      .gif {
+        width: 200px;
+      }
+      .confirmation h1 {
+        font-size: 1.5em;
+      }
+      .confirmation img {
+        width: 70%; /* Further reduce gif size on very small screens */
+      }
+      .container {
+        height: auto; /* Allow for more flexibility in height for smaller screens */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>Will you be my valentine?</header>
+  
+  <div class="container">
+    <div class="button-container">
+      <button class="yes" id="yesButton">Yes</button>
+      <button class="no" id="noButton">No</button>
+    </div>
+    <img class="gif" id="gif" src="https://imgcdn.sigstick.com/bhg06lozfx80d3ecvU8U/3-1.png" alt="gif">
+  </div>
+
+  <div class="confirmation" id="confirmation">
+    <h1>YAYYYYYY SEE YOU ON THE 14th BUBBA</h1>
+    <img class="gif" id="confirmationGif" src="https://gifdb.com/images/thumbnail/cute-blue-cat-sticker-virtual-hug-c82hwncj611jxh2g.gif" alt="Virtual Hug Gif">
+  </div>
+
+  <script>
+    let yesButton = document.getElementById("yesButton");
+    let noButton = document.getElementById("noButton");
+    let gif = document.getElementById("gif");
+    let confirmationSection = document.getElementById("confirmation");
+    let buttonSize = 1;
+    let clickCount = 0;
+    let gifs = [
+      "https://imgcdn.sigstick.com/bhg06lozfx80d3ecvU8U/3-1.png", // Gif 1
+      "https://imgcdn.sigstick.com/kvyQ4ns9poiyvs8Ggohk/12-1.png", // Gif 2
+      "https://media.tenor.com/JovrAHrMni0AAAAM/chiikawa-cute.gif", // Gif 3
+      "https://imgcdn.sigstick.com/bhg06lozfx80d3ecvU8U/8-1.png", // Gif 4
+      "https://ewhabrandcommunication.wordpress.com/wp-content/uploads/2023/10/1.gif", // Gif 5
+      "https://imgcdn.sigstick.com/bhg06lozfx80d3ecvU8U/11-1.png" // Gif 6
+    ];
+
+    noButton.addEventListener("click", () => {
+      // Exponential growth of the "Yes" button on each click
+      buttonSize = buttonSize * 1.5; // Exponentially increase size by multiplying by 1.5
+      yesButton.style.transform = `scale(${buttonSize})`;
+
+      // Change the gif based on the click count
+      clickCount++;
+      if (clickCount < gifs.length) {
+        gif.src = gifs[clickCount];
+      }
+
+      // Move the "No" button randomly on the screen
+      let randomTop = Math.random() * 80 + 10; // Top position between 10% and 90%
+      let randomLeft = Math.random() * 80 + 10; // Left position between 10% and 90%
+      noButton.style.top = `${randomTop}%`;
+      noButton.style.left = `${randomLeft}%`;
+    });
+
+    yesButton.addEventListener("click", () => {
+      // Hide the main container and show the confirmation message
+      document.querySelector('.container').style.display = 'none';
+      confirmationSection.style.display = 'flex';
+    });
+  </script>
+
+</body>
+</html>
